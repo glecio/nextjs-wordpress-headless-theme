@@ -1,5 +1,5 @@
 import React from "react"
-
+import { getTextAlign } from "utils/fonts"
 import { getFontSizeForHeading } from "utils/fonts"
 
 export const Heading = ({textAlign, content, level = 2}) => {
