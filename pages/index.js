@@ -9,7 +9,9 @@ export default function Home(props) {
   console.log("props1: ", props)
   return (
     <div>
-      <MainMenu items={props.mainMenuItens} />
+      <MainMenu items={props.mainMenuItens} 
+        callToActionLabel={props.callToActionLabel} 
+        callToActionDestination={props.callToActionDestination} />
       <BlockRenderer blocks={props.blocks} />
     </div>
   )
@@ -30,6 +32,15 @@ export const getStaticProps = async() => {
         pageSlug
         pageTitle
         mainMenu {
+          callToActionButton {
+            destination {
+              ... on Page {
+                uri
+              }
+            }
+            label
+          }
+
           menuItens {
             items {
               destination {
@@ -58,6 +69,8 @@ export const getStaticProps = async() => {
   return {
     props: {
       mainMenuItens: mapMainMenuItens(data.acfOptionsMainMenu.mainMenu.menuItens),
+      callToActionLabel: data.acfOptionsMainMenu.mainMenu.callToActionButton.label,
+      callToActionDestination: data.acfOptionsMainMenu.mainMenu.callToActionButton.destination.uri,
       blocks
     }
   }
