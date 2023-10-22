@@ -56,21 +56,25 @@ export const BlockRenderer = ({blocks}) => {
                     </Column>
                  )
             }
-
-            case "core/image" : {
-                console.log("imageblock:", block)
-                return (
-                   <Image key={block.id} 
-                   src={block.attributes.url}
-                   width={block.attributes.width}
-                   height={block.attributes.height}
-                   alt={block.attributes.alt || ""}
-                    />
-                )
+            case "core/group" :
+            case "core/block" :{
+                return <BlockRenderer key={block.id} blocks={block.innerBlocks}/>
             }
-
-
-            default: {
+            
+            case "core/image" : {
+                return (
+                    <Image key={block.id} 
+                    src={block.attributes.url}
+                    width={block.attributes.width}
+                    height={block.attributes.height}
+                    alt={block.attributes.alt || ""}
+                    />
+                    )
+                }
+                
+                
+                default: {
+                console.log("block:", block)
               
                 return null
             }
