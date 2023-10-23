@@ -6,6 +6,7 @@ import { Heading } from "components/Heading"
 import Image from "next/image"
 import { Paragraph } from "components/Paragraph/Paragraph"
 import { theme } from "theme"
+import { PropertySearch } from "components/PropertySearch/PropertySearch"
 
 export const BlockRenderer = ({blocks}) => {
     return blocks.map(block => {
@@ -24,7 +25,7 @@ export const BlockRenderer = ({blocks}) => {
                     block.attributes.style?.color?.text}
                 />
             }
-
+            case "core/post-title" :
             case "core/heading" :{
                 return <Heading key={block.id} 
                 textAlign={block.attributes.textAlign} 
@@ -69,13 +70,18 @@ export const BlockRenderer = ({blocks}) => {
                     height={block.attributes.height}
                     alt={block.attributes.alt || ""}
                     />
-                    )
-                }
+                )
+            }
+
+            case "acf/propertysearch" : {
+                return (
+                    <PropertySearch key={block.id}  />
+                )
+            }
                 
                 
-                default: {
-                console.log("block:", block)
-              
+            default: {
+                
                 return null
             }
         }

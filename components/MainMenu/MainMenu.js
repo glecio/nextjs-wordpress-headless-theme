@@ -3,7 +3,6 @@ import Link from "next/link"
 import {FaHouseUser, FaHeart} from "react-icons/fa"
 
 export const MainMenu = ({items, callToActionLabel, callToActionDestination}) => {{
-    console.log("props2:", items)
     return (
         <div className="bg-slate-800 text-white px-5 h-16 sticky top-0 z-20 flex"> 
         
