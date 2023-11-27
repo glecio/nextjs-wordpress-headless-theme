@@ -4,6 +4,7 @@ import { useState } from "react"
 import { Pagination } from "./Pagination"
 import { useRouter } from "next/router"
 import queryString from "query-string"
+import { Filters } from "./Filters"
 
 export const PropertySearch =() => {
    
@@ -13,11 +14,29 @@ export const PropertySearch =() => {
         const router = useRouter()
 
         const search = async () => {
-            const {page} = queryString.parse(window.location.search)
+            const {page, petFriendly, hasParking, minPrice, maxPrice} = queryString.parse(window.location.search)
+            const filters = {}
+            if (minPrice) {
+                filters.minPrice = parseInt(minPrice)
+            }
+
+            if (maxPrice) {
+                filters.minPrice = parseInt(maxPrice)
+            }
+
+            if (hasParking === "true" ){
+                filters.hasParking = true
+            }
+
+            if (petFriendly === "true" ){
+                filters.petFriendly = true
+            }
+            
             const response = await fetch(`/api/search` , {
                 method: "POST",
                 body: JSON.stringify({
-                    page: parseInt( page || "1")
+                    page: parseInt( page || "1"),
+                    ...filters
                 }),
             })
             const data = await response.json()
@@ -37,7 +56,23 @@ export const PropertySearch =() => {
             search()
         } ,[])
         
-       return (<div> 
+        const handleSearch = async ({petFriendly, hasParking, minPrice, maxPrice}) => {
+            //update browser
+
+            //search
+            await router.push(
+                `${router.query.slug.join("/")}?page=1&petFriendly=${!!petFriendly}&hasParking=${!!hasParking}&minPrice=${!!minPrice}&maxPrice=${!!maxPrice}`,
+                 null, 
+                 {
+                    shallow: true,}
+             )
+             search()
+            console.log("filters", petFriendly, hasParking, minPrice, maxPrice)
+
+        }
+
+       return (<div>
+            <Filters onSearch={handleSearch} /> 
             <Results properties={properties} />
             <Pagination 
                 onPageClick={handlePageClick} 
