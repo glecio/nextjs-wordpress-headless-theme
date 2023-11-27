@@ -9,9 +9,9 @@ const handler = async (req, res  ) => {
             query AllPropertiesQuery {
                 properties(where: {offsetPagination: {size: 3, offset: ${((filters.page || 1) - 1) * 3 }}}) {
                     pageInfo {
-                    offsetPagination {
-                        total
-                    }
+                        offsetPagination {
+                            total
+                        }
                     }
                     nodes {
                     propertyFeatures {
