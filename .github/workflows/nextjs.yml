@@ -3,7 +3,10 @@
 # To get started with Next.js see: https://nextjs.org/docs/getting-started
 #
 name: Deploy Next.js site to Pages
-
+env:
+  WP_GRAPHQL_URL : https://acecardweb.com/wp1/graphql
+  WP_IMAGES_URL : glecio.github.io/wp1-headless-theme
+  NEXT_PUBLIC_WP_URL : https://acecardweb.com/wp1/
 on:
   # Runs on pushes targeting the default branch
   push:
