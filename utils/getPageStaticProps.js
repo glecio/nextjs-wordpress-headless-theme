@@ -5,9 +5,9 @@ import { mapMainMenuItens } from "./mapMainMenuItens"
 
 
 export const getPageStaticProps = async(context) => {
-
+    console.log("staticprops:", context)
     const uri = context.params?.slug ? `/${context.params.slug.join("/")}/` : "/"
-
+    console.log("uri", uri)
     const {data} = await client.query ({
       query: gql`
       query GetHomePage($uri: String!) {
@@ -15,7 +15,7 @@ export const getPageStaticProps = async(context) => {
           ... on Page {
             id
             title
-            blocks
+            blocks(postTemplate: false) 
           }
           ... on Property {
             id
@@ -62,8 +62,9 @@ export const getPageStaticProps = async(context) => {
         uri,
       }
     })
-  
+    // Get all blocks in page
     const blocks = cleanAndTransformBlocks(data.nodeByUri.blocks)
+    console.log("cleanblocks", blocks)
     return {
       props: {
         mainMenuItens: mapMainMenuItens(data.acfOptionsMainMenu.mainMenu.menuItens),

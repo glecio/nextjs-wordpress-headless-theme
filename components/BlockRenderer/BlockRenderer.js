@@ -10,6 +10,7 @@ import { PropertySearch } from "components/PropertySearch/PropertySearch"
 
 export const BlockRenderer = ({blocks}) => {
     return blocks.map(block => {
+        console.log("block-renderer", block)
         switch(block.name){
             case "acf/ctabutton" :{
                 return <CallToActionButton key={block.id} buttonLabel={block.attributes.data.label} destination={block.attributes.data.destination} align={block.attributes.data.align} />
@@ -57,7 +58,9 @@ export const BlockRenderer = ({blocks}) => {
                     </Column>
                  )
             }
-            case "core/group" :
+            case "core/group" :{
+                return <BlockRenderer key={block.id} blocks={block.innerBlocks}/>
+            }
             case "core/block" :{
                 return <BlockRenderer key={block.id} blocks={block.innerBlocks}/>
             }
@@ -81,7 +84,7 @@ export const BlockRenderer = ({blocks}) => {
                 
                 
             default: {
-                
+                //console.log("unknown", block)
                 return null
             }
         }
